@@ -1,0 +1,35 @@
+{
+  "variables": {
+    "gobut_database_url": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-west-2",
+    "source_ami": "ami-0ed7303d",
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "app-host HVM EBS {{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30"
+    ]
+  },{
+    "type": "shell",
+    "environment_vars": [
+      "GOBUT_DATABASE_URL={{user `gobut_database_url`}}"
+    ],
+    "scripts": [
+      "scripts/install-public-key.sh",
+      "scripts/apt-update.sh",
+      "scripts/install-base-packages.sh",
+      "scripts/install-golang.sh",
+      "scripts/install-ruby.sh",
+      "scripts/install-httpd.sh",
+      "scripts/install-app-steamstatus.sh",
+      "scripts/install-app-gobut.sh",
+      "scripts/install-app-cchwebsite.sh"
+    ]
+  }]
+}
