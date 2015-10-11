@@ -29,7 +29,8 @@
       "scripts/install-httpd.sh",
       "scripts/install-app-steamstatus.sh",
       "scripts/install-app-gobut.sh",
-      "scripts/install-app-cchwebsite.sh"
+      "scripts/install-app-cchwebsite.sh",
+      "scripts/install-munin.sh"
     ]
   }]
 }
