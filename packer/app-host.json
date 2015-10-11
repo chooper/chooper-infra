@@ -26,11 +26,11 @@
       "scripts/install-base-packages.sh",
       "scripts/install-golang.sh",
       "scripts/install-ruby.sh",
+      "scripts/install-munin.sh",
       "scripts/install-httpd.sh",
       "scripts/install-app-steamstatus.sh",
       "scripts/install-app-gobut.sh",
-      "scripts/install-app-cchwebsite.sh",
-      "scripts/install-munin.sh"
+      "scripts/install-app-cchwebsite.sh"
     ]
   }]
 }
