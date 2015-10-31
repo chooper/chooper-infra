@@ -13,8 +13,11 @@ instance_type="t2.micro"
 subnet="subnet-b737c2c0"
 keypair="chooper_2015"
 sg="sg-cab630af"
+#userdata="$(base64 --input="userdata/init.sh")"
+userdata="file://./userdata/init.sh"
 
 aws ec2 run-instances --image-id "$ami" \
     --instance-type "$instance_type"    \
     --key-name "$keypair"               \
+    --user-data "$userdata"             \
     --network-interfaces "[ { \"DeviceIndex\": 0, \"Groups\": [\"$sg\"], \"SubnetId\": \"$subnet\", \"DeleteOnTermination\": true, \"AssociatePublicIpAddress\": true } ]"

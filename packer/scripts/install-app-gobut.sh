@@ -14,8 +14,8 @@ sudo -u gobut bash -c "source .bashrc ; go install github.com/chooper/gobut"
 cat > /tmp/gobut-init.conf <<EOF
 description	"gobut"
 
-start on runlevel [2345]
-stop on runlevel [!2345]
+# start after cloud-init
+start on stopped cloud-final
 
 setuid gobut
 setgid gobut
@@ -32,7 +32,6 @@ env IRC_ADDRESS=dev.pearachute.net:6667
 env IRC_CHANNEL="#hello"
 env POLL_USERNAMES=charleshooper,japherwocky,foxhop,penni-piper,zz__
 env STEAMSTATUS_API=http://127.0.0.1:10000
-# TODO do something with logs
 exec /home/gobut/go/bin/gobut
 EOF
 
