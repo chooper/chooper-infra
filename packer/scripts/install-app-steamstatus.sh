@@ -14,8 +14,8 @@ sudo -u steamstatus bash -c "source .bashrc ; go install github.com/chooper/stea
 cat > /tmp/steamstatus-init.conf <<EOF
 description	"steamstatus"
 
-start on runlevel [2345]
-stop on runlevel [!2345]
+# start after cloud-init
+start on stopped cloud-final
 
 setuid steamstatus
 setgid steamstatus
@@ -26,7 +26,6 @@ umask 022
 console log
 
 env PORT=10000
-# TODO do something with logs
 exec /home/steamstatus/go/bin/steamstatus-api web
 EOF
 
