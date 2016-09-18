@@ -10,8 +10,8 @@ metadata:
   generation: 4
   labels:
     app: gobut
-    version: v2.0.1
-  name: gobut-v201-001
+    version: v2.0.6
+  name: gobut-v206-001
   namespace: default
   selfLink: /api/v1/namespaces/default/replicationcontrollers/gobut
   uid: 48a96861-7d15-11e6-82f2-42010a8a005e
@@ -19,14 +19,14 @@ spec:
   replicas: 1
   selector:
     # must match metadata.name
-    app: gobut-v201-001
-    version: v2.0.1
+    app: gobut-v206-001
+    version: v2.0.6
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: gobut-v201-001
-        version: v2.0.1
+        app: gobut-v206-001
+        version: v2.0.6
       name: gobut
     spec:
       containers:
@@ -36,7 +36,7 @@ spec:
         - name: IRC_ADDRESS
           value: dev.pearachute.net:6667
         - name: IRC_CHANNEL
-          value: '#hello'
+          value: '#hello,#bots'
         - name: URINFO_API
           value: 'http://urinfo-api.default:10000/fetch'
         - name: STEAMSTATUS_API
@@ -48,7 +48,7 @@ spec:
             secretKeyRef:
               name: gobut-db-url
               key: url
-        image: chooper/gobut:v2.0.1
+        image: chooper/gobut:v2.0.6
         imagePullPolicy: IfNotPresent
         name: gobut
         resources: {}
