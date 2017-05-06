@@ -10,8 +10,8 @@ metadata:
   generation: 4
   labels:
     app: gobut
-    version: v2.0.9
-  name: gobut-v209-001
+    version: v2.1.2
+  name: gobut-v212-001
   namespace: default
   selfLink: /api/v1/namespaces/default/replicationcontrollers/gobut
   uid: 48a96861-7d15-11e6-82f2-42010a8a005e
@@ -19,14 +19,14 @@ spec:
   replicas: 1
   selector:
     # must match metadata.name
-    app: gobut-v209-001
-    version: v2.0.9
+    app: gobut-v212-001
+    version: v2.1.2
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: gobut-v209-001
-        version: v2.0.9
+        app: gobut-v212-001
+        version: v2.1.2
       name: gobut
     spec:
       containers:
@@ -42,13 +42,13 @@ spec:
         - name: STEAMSTATUS_API
           value: 'http://steamstatus-api.default:10100'
         - name: POLL_USERNAMES
-          value: foxhop,japherwocky,hoop2dub
+          value: foxhop,japherwocky,charleshooper,zz__
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: gobut-db-url
               key: url
-        image: chooper/gobut:v2.0.9
+        image: chooper/gobut:v2.1.2
         imagePullPolicy: IfNotPresent
         name: gobut
         resources: {}
