@@ -1,0 +1,2 @@
+cluster_master_username = "foo"
+cluster_master_password = "bar"
