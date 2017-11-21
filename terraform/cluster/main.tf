@@ -9,8 +9,8 @@ resource "google_container_cluster" "primary" {
   ]
 
   master_auth {
-    username = "${var.cluster_master_username}"
-    password = "${var.cluster_master_password}"
+    username = "${var.master_username}"
+    password = "${var.master_password}"
   }
 
   node_config {
@@ -22,17 +22,4 @@ resource "google_container_cluster" "primary" {
     ]
     machine_type = "f1-micro"
   }
-}
-
-# The following outputs allow authentication and connectivity to the Google Container Cluster.
-output "client_certificate" {
-  value = "${google_container_cluster.primary.master_auth.0.client_certificate}"
-}
-
-output "client_key" {
-  value = "${google_container_cluster.primary.master_auth.0.client_key}"
-}
-
-output "cluster_ca_certificate" {
-  value = "${google_container_cluster.primary.master_auth.0.cluster_ca_certificate}"
 }

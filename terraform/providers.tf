@@ -5,14 +5,20 @@ provider "google" {
   region  = "us-west1"
 }
 
+module "cluster" {
+  source          = "./cluster"
+  master_username = "${var.cluster_master_username}"
+  master_password = "${var.cluster_master_password}"
+}
+
 provider "kubernetes" {
   version = "~> 1.0"
 
-  username = "${var.cluster_master_username}"
-  password = "${var.cluster_master_password}"
-  host     = "http://${google_container_cluster.primary.endpoint}"
+  username = "${module.cluster.master_username}"
+  password = "${module.cluster.master_password}"
+  host     = "http://${module.cluster.endpoint}"
 
-  client_certificate     = "${google_container_cluster.primary.master_auth.0.client_certificat}"
-  client_key             = "${google_container_cluster.primary.master_auth.0.client_key}"
-  cluster_ca_certificate = "${google_container_cluster.primary.master_auth.0.cluster_ca_certificate}"
+  client_certificate     = "${module.cluster.client_certificate}"
+  client_key             = "${module.cluster.client_key}"
+  cluster_ca_certificate = "${module.cluster.cluster_ca_certificate}"
 }
