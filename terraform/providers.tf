@@ -18,7 +18,7 @@ provider "kubernetes" {
   password = "${module.cluster.master_password}"
   host     = "http://${module.cluster.endpoint}"
 
-  client_certificate     = "${module.cluster.client_certificate}"
-  client_key             = "${module.cluster.client_key}"
-  cluster_ca_certificate = "${module.cluster.cluster_ca_certificate}"
+  client_certificate     = "${base64decode(module.cluster.client_certificate)}"
+  client_key             = "${base64decode(module.cluster.client_key)}"
+  cluster_ca_certificate = "${base64decode(module.cluster.cluster_ca_certificate)}"
 }
