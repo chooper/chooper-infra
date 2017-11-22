@@ -1,0 +1,14 @@
+Updating kubectl to use a new cluster
+gcloud container clusters get-credentials NAME --zone ZONE
+
+Sometimes new versions of kube causes kubectl to break in strange ways
+gcloud components update
+
+Creating secrets
+kubectl create secret generic secret-name --from-literal=key1=value1 --from-literal=key2=value2 ...
+
+Running shell inside of a pod (good for debugging)
+kubectl run -i --tty busybox --image=busybox -- sh
+
+Attaching to an already running shell inside of a pod
+kubectl attach busybox-4158955249-7qk5c -c busybox -i -t
