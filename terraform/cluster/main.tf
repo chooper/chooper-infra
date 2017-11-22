@@ -20,6 +20,7 @@ resource "google_container_cluster" "primary" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
     ]
+
     machine_type = "f1-micro"
   }
 }
