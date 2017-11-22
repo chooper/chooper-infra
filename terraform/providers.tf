@@ -16,7 +16,7 @@ provider "kubernetes" {
 
   username = "${module.cluster.master_username}"
   password = "${module.cluster.master_password}"
-  host     = "http://${module.cluster.endpoint}"
+  host     = "https://${module.cluster.endpoint}:443"
 
   client_certificate     = "${base64decode(module.cluster.client_certificate)}"
   client_key             = "${base64decode(module.cluster.client_key)}"
