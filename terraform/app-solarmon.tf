@@ -9,8 +9,8 @@ resource "kubernetes_service" "solarmon" {
     }
 
     port {
-      port        = 8080
-      target_port = 8080
+      port        = 80
+      target_port = "${kubernetes_pod.solarmon.spec.0.container.0.port.0.container_port}"
       protocol    = "TCP"
     }
 
