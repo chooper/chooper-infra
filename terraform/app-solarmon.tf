@@ -78,5 +78,50 @@ resource "kubernetes_pod" "solarmon" {
         },
       ]
     }
+
+    container {
+      name = "solarmon-sync"
+
+      image             = "chooper/solarmon:latest"
+      image_pull_policy = "Always"
+      command           = ["bin/sync_loop"]
+
+      env = [
+        {
+          name = "DATABASE_URL"
+
+          value_from {
+            secret_key_ref {
+              name = "solarmon-database"
+              key  = "url"
+            }
+          }
+        },
+        {
+          name = "SOLAREDGE_API_KEY"
+
+          value_from {
+            secret_key_ref {
+              name = "solarmon-api-creds"
+              key  = "api-key"
+            }
+          }
+        },
+        {
+          name = "SOLAREDGE_SITE_ID"
+
+          value_from {
+            secret_key_ref {
+              name = "solarmon-api-creds"
+              key  = "site-id"
+            }
+          }
+        },
+        {
+          name  = "TZ"
+          value = "America/Los_Angeles"
+        },
+      ]
+    }
   }
 }
