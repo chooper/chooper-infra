@@ -1,3 +1,21 @@
+module "database" {
+  source = "./database"
+}
+
+resource "google_sql_database" "solarmon_db" {
+  name     = "solarmon-db"
+  instance = "${module.database.name}"
+}
+
+resource "google_sql_user" "solarmon_db_user" {
+  name     = "solarmon"
+  instance = "${module.database.name}"
+  host     = ""
+
+  # TODO(charles) can i reference a secret here instead?
+  password = "${var.solarmon_db_user_password}"
+}
+
 resource "kubernetes_service" "solarmon" {
   metadata {
     name = "solarmon-web"
@@ -5,12 +23,12 @@ resource "kubernetes_service" "solarmon" {
 
   spec {
     selector {
-      app = "${kubernetes_pod.solarmon.metadata.0.labels.app}"
+      app = "${kubernetes_pod.solarmon_web.metadata.0.labels.app}"
     }
 
     port {
       port        = 80
-      target_port = "${kubernetes_pod.solarmon.spec.0.container.0.port.0.container_port}"
+      target_port = "${kubernetes_pod.solarmon_web.spec.0.container.0.port.0.container_port}"
       protocol    = "TCP"
     }
 
@@ -18,7 +36,7 @@ resource "kubernetes_service" "solarmon" {
   }
 }
 
-resource "kubernetes_pod" "solarmon" {
+resource "kubernetes_pod" "solarmon_web" {
   metadata {
     name = "solarmon-web"
 
@@ -52,33 +70,21 @@ resource "kubernetes_pod" "solarmon" {
             }
           }
         },
-        {
-          name = "SOLAREDGE_API_KEY"
-
-          value_from {
-            secret_key_ref {
-              name = "solarmon-api-creds"
-              key  = "api-key"
-            }
-          }
-        },
-        {
-          name = "SOLAREDGE_SITE_ID"
-
-          value_from {
-            secret_key_ref {
-              name = "solarmon-api-creds"
-              key  = "site-id"
-            }
-          }
-        },
-        {
-          name  = "TZ"
-          value = "America/Los_Angeles"
-        },
       ]
     }
+  }
+}
 
+resource "kubernetes_pod" "solarmon_sync" {
+  metadata {
+    name = "solarmon-sync"
+
+    labels {
+      app = "solarmon-sync"
+    }
+  }
+
+  spec {
     container {
       name = "solarmon-sync"
 

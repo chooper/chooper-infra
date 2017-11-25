@@ -1,1 +1,1 @@
-{"Modules":[{"Source":"./cluster","Key":"1.cluster;./cluster","Version":"","Dir":".terraform/modules/d966cf107fb65e155050f30368d605a1","Root":""}]}
+{"Modules":[{"Source":"./cluster","Key":"1.cluster;./cluster","Version":"","Dir":".terraform/modules/d966cf107fb65e155050f30368d605a1","Root":""},{"Source":"./database","Key":"1.database;./database","Version":"","Dir":".terraform/modules/2eac93f0ff82621b3ca8ca269b02aa51","Root":""}]}

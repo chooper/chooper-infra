@@ -5,6 +5,9 @@ provider "google" {
   region  = "us-west1"
 }
 
+# TODO(charles) i don't think this belongs here but
+# i can't seem to have the kube provider depend on
+# this module if i put it anywhere else
 module "cluster" {
   source          = "./cluster"
   master_username = "${var.cluster_master_username}"
