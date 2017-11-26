@@ -72,6 +72,42 @@ resource "kubernetes_pod" "solarmon_web" {
         },
       ]
     }
+    container {
+      name = "cloudsql-proxy"
+      image = "gcr.io/cloudsql-docker/gce-proxy:1.11"
+      command = ["/cloud_sql_proxy", "--dir=/cloudsql",
+            "-instances=key-chalice-143715:us-west1:primary-db=tcp:5432",
+            "-credential_file=/secrets/cloudsql/credentials.json"]
+      volume_mount {
+        name = "cloudsql-instance-credentials"
+        mount_path = "/secrets/cloudsql"
+        read_only = true
+      }
+      volume_mount {
+        name = "ssl-certs"
+        mount_path = "/etc/ssl/certs"
+      }
+      volume_mount {
+        name = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+    }
+    volume {
+      name = "cloudsql-instance-credentials"
+      secret {
+        secret_name = "cloudsql-instance-credentials"
+      }
+    }
+    volume {
+      name = "cloudsql"
+      empty_dir {}
+    }
+    volume {
+      name = "ssl-certs"
+      host_path {
+        path = "/etc/ssl/certs"
+      }
+    }
   }
 }
 
@@ -128,6 +164,42 @@ resource "kubernetes_pod" "solarmon_sync" {
           value = "America/Los_Angeles"
         },
       ]
+    }
+    container {
+      name = "cloudsql-proxy"
+      image = "gcr.io/cloudsql-docker/gce-proxy:1.11"
+      command = ["/cloud_sql_proxy", "--dir=/cloudsql",
+            "-instances=key-chalice-143715:us-west1:primary-db=tcp:5432",
+            "-credential_file=/secrets/cloudsql/credentials.json"]
+      volume_mount {
+        name = "cloudsql-instance-credentials"
+        mount_path = "/secrets/cloudsql"
+        read_only = true
+      }
+      volume_mount {
+        name = "ssl-certs"
+        mount_path = "/etc/ssl/certs"
+      }
+      volume_mount {
+        name = "cloudsql"
+        mount_path = "/cloudsql"
+      }
+    }
+    volume {
+      name = "cloudsql-instance-credentials"
+      secret {
+        secret_name = "cloudsql-instance-credentials"
+      }
+    }
+    volume {
+      name = "cloudsql"
+      empty_dir {}
+    }
+    volume {
+      name = "ssl-certs"
+      host_path {
+        path = "/etc/ssl/certs"
+      }
     }
   }
 }
