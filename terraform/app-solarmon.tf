@@ -16,24 +16,14 @@ resource "google_sql_user" "solarmon_db_user" {
   password = "${var.solarmon_db_user_password}"
 }
 
-resource "kubernetes_service" "solarmon" {
-  metadata {
-    name = "solarmon-web"
-  }
+resource "google_dns_record_set" "solarmon_dns" {
+  name = "solar.${google_dns_managed_zone.chdotnet.dns_name}"
+  type = "A"
+  ttl  = 300
 
-  spec {
-    selector {
-      app = "${kubernetes_pod.solarmon_web.metadata.0.labels.app}"
-    }
+  managed_zone = "${google_dns_managed_zone.chdotnet.name}"
 
-    port {
-      port        = 80
-      target_port = "${kubernetes_pod.solarmon_web.spec.0.container.0.port.0.container_port}"
-      protocol    = "TCP"
-    }
-
-    type = "LoadBalancer"
-  }
+  rrdatas = ["${var.cluster_primary_ingress_ip}"]
 }
 
 resource "kubernetes_pod" "solarmon_web" {

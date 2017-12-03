@@ -1,2 +1,4 @@
 cluster_master_username = "foo"
 cluster_master_password = "bar"
+solarmon_db_user_password = "f00b@r"
+cluster_primary_ingress_ip = "1.2.3.4"
